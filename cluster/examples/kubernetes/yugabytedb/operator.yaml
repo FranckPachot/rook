@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   name: rook-yugabytedb-system
 ---
-apiVersion: apiextensions.k8s.io/v1beta1
+apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   name: ybclusters.yugabytedb.rook.io
@@ -15,7 +15,64 @@ spec:
     singular: ybcluster
     plural: ybclusters
   scope: Namespaced
-  version: v1alpha1
+  #version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+           type: object
+           properties:
+            master:
+             x-kubernetes-preserve-unknown-fields: true
+             type: object
+             properties:
+              replicas:
+               type: integer
+              resources:
+               type: object
+               properties:
+                requests:
+                 type: object
+                 properties:
+                  cpu:
+                   type: integer
+                  memory: 
+                   type: string
+                limits:
+                 type: object
+                 properties:
+                  cpu:
+                   type: integer
+                  memory: 
+                   type: string
+            tserver:
+             x-kubernetes-preserve-unknown-fields: true
+             type: object
+             properties:
+              replicas:
+               type: integer
+              resources:
+               type: object
+               properties:
+                requests:
+                 type: object
+                 properties:
+                  cpu:
+                   type: integer
+                  memory: 
+                   type: string
+                limits:
+                 type: object
+                 properties:
+                  cpu:
+                   type: integer
+                  memory: 
+                   type: string
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
